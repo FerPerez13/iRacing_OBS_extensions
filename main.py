@@ -1,8 +1,9 @@
-import tkinter as tk
-import login
-import models.member_profile as m_profile
+import customtkinter
 import iracing_calls
 import threading
+
+customtkinter.set_appearance_mode("system")
+customtkinter.set_default_color_theme("green")
 
 class TimerThread(threading.Thread):
     def __init__(self, interval):
@@ -20,44 +21,36 @@ class TimerThread(threading.Thread):
     def stop(self):
         self.running = False
 
-class Main_UI(tk.Frame):
-    """Docstring."""
-    def __init__(self, parent=None):
-        tk.Frame.__init__(self, parent)
-        self.parent = parent
-        self.init_ui()
-
-    def init_ui(self):
-        self.parent.title("Main Window")
-        self.parent.resizable(False, False)
-
-        # create label to display member profile
-        self.member_profile_label = tk.Label(self.parent, text="Member Profile")
-        self.member_profile_label.pack()
-
-        # create button to start timer to update member profile
-        self.start_button = tk.Button(self.parent, text="Start Process", command=self.start_member_profile_update_timer)
-        self.start_button.pack()
-
-        self.stop_button = tk.Button(self.parent, text="Stop Process", command=self.stop_member_profile_update_timer)
-        self.stop_button.pack()
-
-        # create button to call iracing_calls.update_member_profile()
-        self.update_button = tk.Button(self.parent, text="Update Member Profile", command=iracing_calls.update_member_profile)
-        self.update_button.pack()
-
-    def start_member_profile_update_timer(self):
-        self.timer_thread = TimerThread(0)
-        self.timer_thread.start()
-
-
-    def stop_member_profile_update_timer(self):
-        if self.timer_thread:
-            self.timer_thread.stop()
-            self.timer_thread = None
 
 def show_main_window():
-    root = tk.Tk()
-    root.geometry("500x500")
-    app = Main_UI(parent=root)
+    def switch_event():
+        timer_thread = TimerThread(60)
+        progress_bar_update.set(0)
+        if switch.get() == "on":
+            timer_thread.start()
+            progress_bar_update.start()
+        else:
+            timer_thread.stop()
+            progress_bar_update.stop()
+
+    app = customtkinter.CTk()
+    app.geometry("900x400")
+    app.title("iRacing OBS Extensions")
+    app.resizable(False, False)
+
+    profile_stats_label = customtkinter.CTkLabel(app, text="Estadisticas piloto")
+    profile_stats_label.place(relx=0.1, rely=0.1, anchor=customtkinter.CENTER)
+
+    switch_var = customtkinter.StringVar(value="off")
+    switch = customtkinter.CTkSwitch(app, text="auto", command=switch_event, variable=switch_var, onvalue="on",
+                                     offvalue="off")
+    switch.place(relx=0.5, rely=0.1, anchor=customtkinter.CENTER)
+
+    progress_bar_update = customtkinter.CTkProgressBar(app, orientation="horizontal")
+    progress_bar_update.place(relx=0.65, rely=0.1, anchor=customtkinter.CENTER)
+
+    button_force_update = customtkinter.CTkButton(app, text="Force Update",
+                                                  command=iracing_calls.update_member_profile)
+    button_force_update.place(relx=0.9, rely=0.1, anchor=customtkinter.CENTER)
+
     app.mainloop()
