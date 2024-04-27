@@ -11,13 +11,14 @@ def get_license_html(type, license, irating, sr):
 
 
 def try_login():
-    print(f"Username: {login.username}, Password: {login.password}")
     idc = irDataClient(username=login.username, password=login.password)
+    m_profile.customer_id = idc.member_info().get('cust_id')
 
 
 def update_member_profile():
     idc = irDataClient(username=login.username, password=login.password)
-    member_profile = idc.member_profile(cust_id=895659)
+
+    member_profile = idc.member_profile(cust_id=m_profile.customer_id)
 
     member_info = member_profile.get('member_info')
     m_profile.name = member_info.get('display_name')
