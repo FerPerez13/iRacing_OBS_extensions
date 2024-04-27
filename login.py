@@ -1,8 +1,9 @@
 import customtkinter
 from PIL import Image
+
 import iracing_calls
-import models.login as loginModel
 import main
+import models.login as login_model
 
 customtkinter.set_appearance_mode("system")
 customtkinter.set_default_color_theme("blue")
@@ -11,17 +12,18 @@ app = customtkinter.CTk()
 app.geometry("300x300")
 app.title("iRacing OBS Extensions")
 app.resizable(False, False)
+app.iconbitmap("images/ioe.ico")
 
 
 def save_credentials():
     with open("credentials.txt", 'w') as f:
-        f.write(f"{loginModel.username}\n{loginModel.password}")
+        f.write(f"{login_model.username}\n{login_model.password}")
         f.close()
 
 
 def login():
-    loginModel.username = username_entry.get()
-    loginModel.password = password_entry.get()
+    login_model.username = username_entry.get()
+    login_model.password = password_entry.get()
 
     try:
         iracing_calls.try_login()
@@ -30,12 +32,13 @@ def login():
     except Exception as e:
         print(e)
 
+
 has_login = False
 try:
     with open("credentials.txt", 'r') as f:
         lines = f.readlines()
-        loginModel.username = lines[0].strip()
-        loginModel.password = lines[1].strip()
+        login_model.username = lines[0].strip()
+        login_model.password = lines[1].strip()
         has_login = True
         f.close()
 except FileNotFoundError:
@@ -61,8 +64,8 @@ save_login = customtkinter.CTkCheckBox(app, text="Save login")
 save_login.place(relx=0.5, rely=0.85, anchor=customtkinter.CENTER)
 
 if has_login:
-    username_entry.insert(0, loginModel.username)
-    password_entry.insert(0, loginModel.password)
+    username_entry.insert(0, login_model.username)
+    password_entry.insert(0, login_model.password)
 
 app.mainloop()
 
