@@ -1,6 +1,8 @@
-import customtkinter
-import iracing_calls
 import threading
+
+import customtkinter
+
+import iracing_calls
 
 customtkinter.set_appearance_mode("system")
 customtkinter.set_default_color_theme("green")
