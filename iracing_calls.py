@@ -5,6 +5,10 @@ import models.member_profile as m_profile
 tread_member_profile_update = False
 
 
+def get_license_html(type, license, irating, sr):
+    return f'<head><meta http-equiv="refresh" content="1"></head><html><table><tr><td><img src="../images/iracing_licenses/{type.lower()}_{license.lower()}.svg"></td><td><div style="font-size:125px;color:#fff;font-weight:700;font-family:verdana">{sr}</div><div style="font-size:125px;color:#fff;font-weight:700;font-family:verdana">{irating}</div></td></tr></table></html>'
+
+
 def try_login():
     print(f"Username: {login.username}, Password: {login.password}")
     idc = irDataClient(username=login.username, password=login.password)
@@ -31,22 +35,10 @@ def update_member_profile():
 
 
 def update_member_profile_results():
-    with open("results/name.txt", 'w') as f:
-        f.write(f"{m_profile.name}")
+    with open("results/sportscar.html", 'w') as f:
+        f.write(get_license_html("sportscar", m_profile.sportscar_license, m_profile.sportscar, m_profile.sportscar_sr))
         f.close()
 
-    with open("results/sportscar_sr.txt", 'w') as f:
-        f.write(f"{m_profile.sportscar_license} {m_profile.sportscar_sr}")
-        f.close()
-
-    with open("results/formula_sr.txt", 'w') as f:
-        f.write(f"{m_profile.formula_license} {m_profile.formula_sr}")
-        f.close()
-
-    with open("results/sportscar.txt", 'w') as f:
-        f.write(f"{m_profile.sportscar}")
-        f.close()
-
-    with open("results/formula.txt", 'w') as f:
-        f.write(f"{m_profile.formula}")
+    with open("results/formula.html", 'w') as f:
+        f.write(get_license_html("formula", m_profile.formula_license, m_profile.formula, m_profile.formula_sr))
         f.close()
