@@ -25,6 +25,10 @@ def update_member_profile():
 
     licenses = member_info.get('licenses')
 
+    m_profile.oval_license = licenses[0].get('group_name').replace('Class ', '')
+    m_profile.oval_sr = licenses[0].get('safety_rating')
+    m_profile.oval = licenses[0].get('irating')
+
     m_profile.sportscar_license = licenses[1].get('group_name').replace('Class ', '')
     m_profile.sportscar_sr = licenses[1].get('safety_rating')
     m_profile.sportscar = licenses[1].get('irating')
@@ -32,6 +36,7 @@ def update_member_profile():
     m_profile.formula_license = licenses[2].get('group_name').replace('Class ', '')
     m_profile.formula_sr = licenses[2].get('safety_rating')
     m_profile.formula = licenses[2].get('irating')
+
 
     update_member_profile_results()
 
@@ -44,3 +49,8 @@ def update_member_profile_results():
     with open("results/formula.html", 'w') as f:
         f.write(get_license_html("formula", m_profile.formula_license, m_profile.formula, m_profile.formula_sr))
         f.close()
+
+    with open("results/oval.html", 'w') as f:
+        f.write(get_license_html("oval", m_profile.oval_license, m_profile.oval, m_profile.oval_sr))
+        f.close()
+
