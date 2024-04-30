@@ -24,7 +24,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: Windows_qwiklabs
-          path: dist/qwiklab_badge_checker.exe
+          path: dist/login.exe
 
       - name: create release
         id: create_release
@@ -46,6 +46,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{steps.create_release.outputs.upload_url}}
-          asset_path: dist/qwiklab_badge_checker.exe
+          asset_path: dist/login.exe
           asset_name: iRacing-OBS-extensions-Windows-amd64.exe
           asset_content_type: application/zip
