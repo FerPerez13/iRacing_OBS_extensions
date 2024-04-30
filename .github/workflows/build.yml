@@ -23,7 +23,7 @@ jobs:
           python -m PyInstaller login.spec
       - uses: actions/upload-artifact@v2
         with:
-          name: Windows_qwiklabs
+          name: Windows_ioe
           path: dist/login.exe
 
       - name: create release
