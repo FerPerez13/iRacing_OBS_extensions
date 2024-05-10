@@ -12,11 +12,15 @@ app = customtkinter.CTk()
 app.geometry("300x300")
 app.title("iRacing OBS Extensions")
 app.resizable(False, False)
-app.iconbitmap("images/ioe.ico")
+
+try:
+    app.iconbitmap("ioe.ico")
+except:
+    pass
 
 
 def save_credentials():
-    with open("credentials.txt", 'w') as f:
+    with open("credentials.txt", "w") as f:
         f.write(f"{login_model.username}\n{login_model.password}")
         f.close()
 
@@ -24,6 +28,9 @@ def save_credentials():
 def login():
     login_model.username = username_entry.get()
     login_model.password = password_entry.get()
+
+    if save_login.get() == 1:
+        save_credentials()
 
     try:
         iracing_calls.try_login()
@@ -35,7 +42,7 @@ def login():
 
 has_login = False
 try:
-    with open("credentials.txt", 'r') as f:
+    with open("credentials.txt", "r") as f:
         lines = f.readlines()
         login_model.username = lines[0].strip()
         login_model.password = lines[1].strip()
@@ -68,4 +75,3 @@ if has_login:
     password_entry.insert(0, login_model.password)
 
 app.mainloop()
-
