@@ -1,7 +1,9 @@
 from iracingdataapi.client import irDataClient
+from datetime import datetime
 
 import models.login as login
 import models.member_profile as m_profile
+import models.last_result as last_result
 
 tread_member_profile_update = False
 
@@ -10,13 +12,22 @@ def get_license_html(type, license, irating, sr):
     return f'<head><meta http-equiv="refresh" content="1"></head><html><table><tr><td><img src="../images/iracing_licenses/{type.lower()}_{license.lower()}.svg"></td><td><div style="font-size:125px;color:#fff;font-weight:700;font-family:verdana">{sr}</div><div style="font-size:125px;color:#fff;font-weight:700;font-family:verdana">{irating}</div></td></tr></table></html>'
 
 
+def get_last_result_html(
+    event_name, car_name, track_name, starting_position, finish_position
+):
+    return f'<head><meta http-equiv="refresh" content="1"></head><html><div style="font-size:125px;color:#fff;font-weight:700;font-family:verdana">{event_name}</div><div style="font-size:125px;color:#fff;font-weight:700;font-family:verdana">{car_name}</div><div style="font-size:125px;color:#fff;font-weight:700;font-family:verdana">{track_name}</div><table><tr><td><div style="font-size:125px;color:#fff;font-weight:700;font-family:verdana">🟩 {starting_position}</div></td><td><div style="font-size:125px;color:#fff;font-weight:700;font-family:verdana">➡️</div></td><td><div style="font-size:125px;color:#fff;font-weight:700;font-family:verdana">{finish_position} 🏁</div></td></tr></table></html>'
+
+
 def try_login():
     idc = irDataClient(username=login.username, password=login.password)
     m_profile.customer_id = idc.member_info().get("cust_id")
 
 
 def update_member_profile():
-    print("Get Licences Info from iRacing...")
+    print(
+        "🏁 Licences Info... -> ",
+        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    )
 
     idc = irDataClient(username=login.username, password=login.password)
 
@@ -58,6 +69,11 @@ def update_member_profile():
 
 
 def get_last_results():
+    print(
+        "🚙 Last Result... -> ",
+        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    )
+
     idc = irDataClient(username=login.username, password=login.password)
     member_profile = idc.member_profile(cust_id=m_profile.customer_id)
 
@@ -66,7 +82,41 @@ def get_last_results():
         result for result in last_results if result.get("event_type") == "RACE"
     ]
 
-    print(race_results[0])
+    result = race_results[0]
+    last_result.event_id = result.get("event_id")
+    last_result.subsession_id = result.get("subsession_id")
+    last_result.event_name = result.get("event_name")
+    last_result.car_name = result.get("car_name")
+    last_result.starting_position = result.get("starting_position")
+    last_result.finish_position = result.get("finish_position")
+
+    track = result.get("track")
+    last_result.track_name = track.get("track_name")
+
+    update_last_result_file()
+
+    print("Event ID:", last_result.event_id)
+    print("Event Name:", last_result.event_name)
+    print("Car Name:", last_result.car_name)
+    print("Track Name:", last_result.track_name)
+    print("Starting Position:", last_result.starting_position)
+    print("Finishing Position:", last_result.finish_position)
+    print("Incident Count:", last_result.incident_count)
+    print()
+
+
+def update_last_result_file():
+    with open("results/last_result.html", "w") as f:
+        f.write(
+            get_last_result_html(
+                last_result.event_name,
+                last_result.car_name,
+                last_result.track_name,
+                last_result.starting_position,
+                last_result.finish_position,
+            )
+        )
+        f.close()
 
 
 def update_member_profile_results():
