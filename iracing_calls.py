@@ -15,7 +15,7 @@ def get_license_html(type, license, irating, sr):
 def get_last_result_html(
     event_name, car_name, track_name, starting_position, finish_position
 ):
-    return f'<meta content=1 http-equiv=refresh><div style=font-size:125px;color:#fff;font-weight:700;font-family:verdana>{event_name}</div><div style=font-size:125px;color:#fff;font-weight:700;font-family:verdana>{car_name}</div><div style=font-size:125px;color:#fff;font-weight:700;font-family:verdana>{track_name}</div><table><tr><td><div style=font-size:125px;color:#fff;font-weight:700;font-family:verdana>De {starting_position}</div><td><div style=font-size:125px;color:#fff;font-weight:700;font-family:verdana>a {finish_position}</div></table>'
+    return f"<meta content=1 http-equiv=refresh><div style=font-size:125px;color:#fff;font-weight:700;font-family:verdana>{event_name}</div><div style=font-size:125px;color:#fff;font-weight:700;font-family:verdana>{car_name}</div><div style=font-size:125px;color:#fff;font-weight:700;font-family:verdana>{track_name}</div><table><tr><td><div style=font-size:125px;color:#fff;font-weight:700;font-family:verdana>De: {starting_position} a:</div><td><div style=font-size:125px;color:#fff;font-weight:700;font-family:verdana>{finish_position}</div></table>"
 
 
 def try_login():
