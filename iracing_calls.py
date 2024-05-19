@@ -90,6 +90,9 @@ def get_last_results():
     last_result.starting_position = result.get("starting_position")
     last_result.finish_position = result.get("finish_position")
 
+    last_result.starting_position = last_result.starting_position + 1
+    last_result.finish_position = last_result.finish_position + 1
+
     track = result.get("track")
     last_result.track_name = track.get("track_name")
 
