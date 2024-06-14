@@ -49,7 +49,7 @@ Aqui tendremos los archivos ``html`` que tenemos que importar en el OBS como **f
 
 Esto quedará de la siguiente forma (dependiendo de la posición en la que lo coloques en el OBS)
 
-![img.png](/ReadmeImages/resultado en directo.png)
+![img.png](/ReadmeImages/resultado.png)
 
 ## Conclusión
 
