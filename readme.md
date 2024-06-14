@@ -24,13 +24,13 @@ Una vez hecho esto ya podrás ejecutar correctamente el archivo
 
 Cuando se ejecuta el programa, aparece un formulario en el que tienes que meter tus credenciales de iRacing (esto es necesario para poder recoger tus estadisticas)
 
-![img.png](ReadmeImages/Login.png)
+![img.png](/ReadmeImages/Login.png)
 
 Si marcas el check de **Save Login** este te guardará en un archivo de la carpeta de tu ordenador los credenciales para facilitar los futuros acceos a la aplicación.
 
 Hecho esto, y si tus credenciales son correctos, tendrás la siguiente ventana: 
 
-![img.png](ReadmeImages/Process.png)
+![img.png](/ReadmeImages/Process.png)
 
 Aqui tenemos las **Estadisticas de Piloto** y **Ultima Carrera**. Dentro de cada una de estas filas, tenemos unos interruptores que activan/desactivan cada uno de los procesos.
 Estos tienes que activarlos para que se actualice de forma automatica las estadisticas. 
@@ -45,11 +45,11 @@ Hecho esto solo nos falta importar los datos en OBS. Para esto nos iremos a la c
 
 Aqui tendremos los archivos ``html`` que tenemos que importar en el OBS como **fuente de navegador** y **archivo local**
 
-![img.png](ReadmeImages/folder.png)
+![img.png](/ReadmeImages/folder.png)
 
 Esto quedará de la siguiente forma (dependiendo de la posición en la que lo coloques en el OBS)
 
-![img.png](ReadmeImages/resultado en directo.png)
+![img.png](/ReadmeImages/resultado en directo.png)
 
 ## Conclusión
 
